@@ -11,6 +11,8 @@ module.exports = {
   user_mod,
   user_update,
   checkType,
+  deleted,
+  restore,
   logout
 };
 
@@ -20,7 +22,7 @@ const generator = require("generate-password");
 var alert = require("alert-node");
 const jwt = require("jsonwebtoken");
 const key = require("../key");
-var cookieParser = require('cookie-parser');
+var cookieParser = require("cookie-parser");
 
 /* Email */
 
@@ -80,7 +82,7 @@ function adminlogin(req, res) {
       jwt.sign(
         { id: data.id, role: data.role },
         key.sk,
-        { expiresIn: "1m" },
+        { expiresIn: "5m" },
         function(err, data) {
           if (err) {
             console.log(err);
@@ -304,7 +306,29 @@ function user_update(req, res) {
   );
 }
 
+function deleted(req, res) {
+  data.find({ is_deleted: "true" }, function(err, data) {
+    record = data;
+    res.render("deleted.html", { record });
+  });
+}
+
+function restore(req, res) {
+  let id = req.params.id;
+  data.findOneAndUpdate(
+    { _id: id },
+    { $set: { is_deleted: "false" } },
+    (err, data) => {
+      if (err) {
+        alert("error");
+      } else {
+        alert("Restored");
+        res.redirect("/dashboard/deleted");
+      }
+    }
+  );
+}
+
 function logout(req, res) {
-    res.clearCookie('name').redirect('/');
-   
+  res.clearCookie("name").redirect("/");
 }

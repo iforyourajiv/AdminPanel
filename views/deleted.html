@@ -91,11 +91,11 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/dashboard/deleted">
-                  <i class="fas fa-fw fa-cog"></i>
-                  <span><b>Show Deleted</b></span>
-        
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span><b>Show Deleted</b></span>
+
                 </a>
-              </li>
+            </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
 
@@ -197,62 +197,69 @@
                 <!-- End of Topbar -->
 
                 <!-- Main Content Here -->
-                   
+
 
                 <div class="table-responsive">
-                        <h2 style="color: crimson; font-weight:600;"> User List</h2>
-                        <table class="table table-light mt-5">
-                                <thead class="thead-dark">
-                                <tr>
-                                <th >Sl.no</th>
-                                <th >Name </th>
-                                <th >Email </th>
-                                <th >Blood Group </th>
-                                <th >Password </th>
-                                <th >Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr >
+                    <h2 style="color: crimson; font-weight:600;"> Deleted List</h2>
+                    <table class="table table-light mt-5">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Sl.no</th>
+                                <th>Role</th>
+                                <th>Name </th>
+                                <th>Email </th>
+                                <th>Blood Group </th>
+                                <th>Password </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
                                 <th>
-                                <% for (var i =0; i<record.length ; i++ ) { %>
-                                <br /> <%=[i+1] %>
-                                <% } %>
+                                    <% for (var i =0; i<record.length ; i++ ) { %>
+                                    <br /> <%=[i+1] %>
+                                    <% } %>
                                 </th>
                                 <th>
-                                <% for (var i =0; i<record.length ; i++ ) { %>
-                                <br /> <%=record[i]['name'] %>
-                                <% } %>
+                                    <% for (var i =0; i<record.length ; i++ ) { %>
+                                    <br /> <%=record[i]['role'] %>
+                                    <% } %>
+                                </th>
+
+
+                                <th>
+                                    <% for (var i =0; i<record.length ; i++ ) { %>
+                                    <br /> <%=record[i]['name'] %>
+                                    <% } %>
                                 </th>
                                 <th>
-                                <% for (var i =0; i<record.length ; i++ ) { %>
-                                <br /> <%=record[i]['email'] %>
-                                <% } %>
+                                    <% for (var i =0; i<record.length ; i++ ) { %>
+                                    <br /> <%=record[i]['email'] %>
+                                    <% } %>
                                 </th>
                                 <th>
-                                <% for (var i =0; i<record.length ; i++ ) { %>
-                                <br /> <%=record[i]['bgroup'] %>
-                                <% } %>
+                                    <% for (var i =0; i<record.length ; i++ ) { %>
+                                    <br /> <%=record[i]['bgroup'] %>
+                                    <% } %>
                                 </th>
                                 <th>
-                                <% for (var i =0; i<record.length ; i++ ) { %>
-                                <br /> <%=record[i]['password'] %>
-                                <% } %>
+                                    <% for (var i =0; i<record.length ; i++ ) { %>
+                                    <br /> <%=record[i]['password'] %>
+                                    <% } %>
                                 </th>
                                 <th>
-                                <% for (var i =0; i<record.length ; i++ ) { %>
-                                <br /><a style="color:brown" href="/dashboard/user_mod/<%=record[i]['_id'] %>"
-                                name="id">Modify</a>
-                                <a class="ml-3" style="color: red" href="/dashboard/user_del/<%=record[i]['_id'] %>"
-                                name="id">Delete </a>
-                                
-                                <% } %>
-                                
+                                    <% for (var i =0; i<record.length ; i++ ) { %>
+                                    <br /><a style="color:brown" href="/dashboard/restore/<%=record[i]['_id'] %>"
+                                        name="id">Restore</a>
+
+
+                                    <% } %>
+
                                 </th>
-                                
-                                </tr>
-                                </tbody>
-                                </table>
+
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
 

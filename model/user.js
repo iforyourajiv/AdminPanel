@@ -16,4 +16,6 @@ is_deleted:{type:Boolean,default:false}
 
 
 
+
+
 module.exports=mongoose.model('adminapp',db_schema)

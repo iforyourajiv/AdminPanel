@@ -73,6 +73,7 @@ router.get("/dashboard/userregaction", auth.checktoken, admin.useraction);
 router.get("/dashboard/user_del/:id", auth.checktoken, admin.user_del);
 router.get("/dashboard/user_mod/:id", auth.checktoken, admin.user_mod);
 router.post("/dashboard/user_update", auth.checktoken, admin.user_update);
-
+router.get("/dashboard/deleted", auth.checktoken, admin.deleted);
+router.get("/dashboard/restore/:id", auth.checktoken, admin.restore);
 router.get("/logout",admin.logout);
 module.exports = router;
