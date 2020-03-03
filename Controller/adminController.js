@@ -80,7 +80,7 @@ function adminlogin(req, res) {
       jwt.sign(
         { id: data.id, role: data.role },
         key.sk,
-        { expiresIn: "5m" },
+        { expiresIn: "1m" },
         function(err, data) {
           if (err) {
             console.log(err);
@@ -305,6 +305,6 @@ function user_update(req, res) {
 }
 
 function logout(req, res) {
-    res.clearCookie('name');
+    res.clearCookie('name').redirect('/');
    
 }

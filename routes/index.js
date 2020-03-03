@@ -6,7 +6,7 @@ const admin = require("../Controller/adminController");
 const auth = require("../auth/auth");
 
 /* GET home page. */
-router.get("/",function(req, res, next) {
+router.get("/",auth.checktoken,function(req, res, next) {
   // let name='admin';
   // let email='admin@gmail.com'
   // let bgroup='A+';
@@ -21,7 +21,7 @@ router.get("/",function(req, res, next) {
   //     }
   // });
 
-  res.render("index.html");
+  res.render("dashboard.html");
 });
 
 router.post("/dashboard",admin.adminlogin);
