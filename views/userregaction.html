@@ -57,45 +57,33 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/dashboard/subadminreg">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span><b>Add Sub-Admin</b></span>
 
-                </a>
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/dashboard/subadminaction">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span><b> Sub-Admin Actions</b></span>
+                    <span><b>Manage Sub-Admin </b></span>
 
                 </a>
             </li>
 
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="/dashboard/userreg">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span><b>Add User</b></span>
 
-                </a>
-            </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/dashboard/userregaction">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span><b> User Actions</b></span>
+                    <span><b>Manage User </b></span>
 
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/dashboard/deleted">
-                  <i class="fas fa-fw fa-cog"></i>
-                  <span><b>Show Deleted</b></span>
-        
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span><b>Show Deleted</b></span>
+
                 </a>
-              </li>
+            </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
 
@@ -197,62 +185,62 @@
                 <!-- End of Topbar -->
 
                 <!-- Main Content Here -->
-                   
+
 
                 <div class="table-responsive">
-                        <h2 style="color: crimson; font-weight:600;"> User List</h2>
-                        <table class="table table-light mt-5">
-                                <thead class="thead-dark">
-                                <tr>
-                                <th >Sl.no</th>
-                                <th >Name </th>
-                                <th >Email </th>
-                                <th >Blood Group </th>
-                                <th >Password </th>
-                                <th >Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr >
+                    <h2 style="color: crimson; font-weight:600;"> User List</h2><a
+                        style="float:right;font-size:22px;padding-right:20px;padding-left:20px; margin-right:20%;"
+                        class="btn-primary" href="/dashboard/userreg">Add</a>
+                    <table class="table table-light mt-5">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Sl.no</th>
+                                <th>Name </th>
+                                <th>Email </th>
+                                <th>Blood Group </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
                                 <th>
-                                <% for (var i =0; i<record.length ; i++ ) { %>
-                                <br /> <%=[i+1] %>
-                                <% } %>
+                                    <% for (var i =0; i<record.length ; i++ ) { %>
+                                    <br /> <%=[i+1] %>
+                                    <% } %>
                                 </th>
                                 <th>
-                                <% for (var i =0; i<record.length ; i++ ) { %>
-                                <br /> <%=record[i]['name'] %>
-                                <% } %>
+                                    <% for (var i =0; i<record.length ; i++ ) { %>
+                                    <br /> <%=record[i]['name'] %>
+                                    <% } %>
                                 </th>
                                 <th>
-                                <% for (var i =0; i<record.length ; i++ ) { %>
-                                <br /> <%=record[i]['email'] %>
-                                <% } %>
+                                    <% for (var i =0; i<record.length ; i++ ) { %>
+                                    <br /> <%=record[i]['email'] %>
+                                    <% } %>
                                 </th>
                                 <th>
-                                <% for (var i =0; i<record.length ; i++ ) { %>
-                                <br /> <%=record[i]['bgroup'] %>
-                                <% } %>
+                                    <% for (var i =0; i<record.length ; i++ ) { %>
+                                    <br /> <%=record[i]['bgroup'] %>
+                                    <% } %>
                                 </th>
                                 <th>
-                                <% for (var i =0; i<record.length ; i++ ) { %>
-                                <br /> <%=record[i]['password'] %>
-                                <% } %>
+                                    <% for (var i =0; i<record.length ; i++ ) { %>
+                                    <br /><a style="color:brown" href="/dashboard/user_mod/<%=record[i]['_id'] %>"
+                                        name="id">Modify</a>
+                                    <a class="ml-3" style="color: red" href="/dashboard/user_del/<%=record[i]['_id'] %>"
+                                        name="id">Delete </a>
+
+                                        <a class="ml-3" style="color: red"
+                                        href="/dashboard/change_password/<%=record[i]['_id'] %>" name="id">Change Password
+                                    </a>
+                                    
+                                    <% } %>
+
                                 </th>
-                                <th>
-                                <% for (var i =0; i<record.length ; i++ ) { %>
-                                <br /><a style="color:brown" href="/dashboard/user_mod/<%=record[i]['_id'] %>"
-                                name="id">Modify</a>
-                                <a class="ml-3" style="color: red" href="/dashboard/user_del/<%=record[i]['_id'] %>"
-                                name="id">Delete </a>
-                                
-                                <% } %>
-                                
-                                </th>
-                                
-                                </tr>
-                                </tbody>
-                                </table>
+
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
 

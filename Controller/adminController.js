@@ -15,7 +15,9 @@ module.exports = {
   deleted,
   restore,
   logout,
-  eMail
+  eMail,
+  chk_pswd,
+  change_pswd
 };
 
 const data = require("../model/user");
@@ -26,10 +28,8 @@ const jwt = require("jsonwebtoken");
 const key = require("../key");
 var cookieParser = require("cookie-parser");
 
-
-function dash(req,res){
-  res.redirect('/');
-
+function dash(req, res) {
+  res.redirect("/");
 }
 
 /* Email */
@@ -63,8 +63,6 @@ function eMail(email, password, req, res) {
   });
 }
 
-
-
 function checkType(req, res, next) {
   let type = req.type;
   if (type == "admin") {
@@ -80,7 +78,6 @@ function checkType(req, res, next) {
 function adminlogin(req, res) {
   let username = req.body.admin_name;
   let password = req.body.admin_password;
-  let role = req.body.role;
   data.findOne({ email: username, password: password }, function(err, data) {
     if (err) {
       res.render(err);
@@ -341,4 +338,35 @@ function restore(req, res) {
 
 function logout(req, res) {
   res.clearCookie("name").redirect("/");
+}
+
+
+function chk_pswd(req,res){
+  let id = req.params.id;
+  data.findById({ _id: id }, (err, data) => {
+    record = data;
+    console.log({ record });
+    res.render("change_password.html", { record });
+  });
+}
+
+
+function change_pswd(req,res){
+ 
+  let id = req.body.id;
+  let password=req.body.password;
+  data.findByIdAndUpdate(
+    { _id: id },
+    { $set: {  password: password } },
+    (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        alert("Password Changed SuccessFully");
+        res.redirect("/");
+      }
+    }
+  );
+
+
 }

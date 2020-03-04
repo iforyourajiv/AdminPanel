@@ -7,7 +7,7 @@ const forgot = require("../Controller/forgot");
 const auth = require("../auth/auth");
 
 /* GET home page. */
-router.get("/",auth.checktoken,function(req, res, next) {
+router.get("/", auth.checktoken, function(req, res, next) {
   // let name='admin';
   // let email='admin@gmail.com'
   // let bgroup='A+';
@@ -21,12 +21,12 @@ router.get("/",auth.checktoken,function(req, res, next) {
   //         console.log("save Succesfully");
   //     }
   // });
-res.render("dashboard.html");
+  res.render("dashboard.html");
 });
-router.get("/dash",auth.checktoken,admin.dash);
-router.get("/forgot",forgot.forgot);
-router.post("/reset",forgot.reset);
-router.post("/dashboard",admin.adminlogin);
+router.get("/dash", auth.checktoken, admin.dash);
+router.get("/forgot", forgot.forgot);
+router.post("/reset", forgot.checkrole, forgot.reset);
+router.post("/dashboard", admin.adminlogin);
 router.get("/dashboard/subadminreg", auth.checktoken, admin.checkType, function(
   req,
   res
@@ -66,16 +66,49 @@ router.post(
 
 /* User Routes */
 
-router.get("/dashboard/userreg",auth.checktoken, function(req, res) {
+router.get("/dashboard/userreg", auth.checktoken, function(req, res) {
   res.render("Add_user.html");
 });
 
 router.post("/dashboard/userreg_save", auth.checktoken, admin.add_user);
-router.get("/dashboard/userregaction", auth.checktoken, admin.useraction);
-router.get("/dashboard/user_del/:id", auth.checktoken, admin.user_del);
-router.get("/dashboard/user_mod/:id", auth.checktoken, admin.user_mod);
-router.post("/dashboard/user_update", auth.checktoken, admin.user_update);
-router.get("/dashboard/deleted", auth.checktoken, admin.deleted);
-router.get("/dashboard/restore/:id", auth.checktoken, admin.restore);
-router.get("/logout",admin.logout);
+router.get(
+  "/dashboard/userregaction",
+  auth.checktoken,
+  admin.checkType,
+  admin.useraction
+);
+router.get(
+  "/dashboard/user_del/:id",
+  auth.checktoken,
+  admin.checkType,
+  admin.user_del
+);
+router.get(
+  "/dashboard/user_mod/:id",
+  auth.checktoken,
+  admin.checkType,
+  admin.user_mod
+);
+router.post(
+  "/dashboard/user_update",
+  auth.checktoken,
+  admin.checkType,
+  admin.user_update
+);
+router.get(
+  "/dashboard/deleted",
+  auth.checktoken,
+  admin.checkType,
+  admin.deleted
+);
+router.get(
+  "/dashboard/restore/:id",
+  auth.checktoken,
+  admin.checkType,
+  admin.restore
+);
+router.get("/dashboard/change_password/:id", auth.checktoken,admin.checkType,admin.chk_pswd);
+router.post("/dashboard/change_pswd", auth.checktoken,admin.checkType,admin.change_pswd)
+
+router.get("/logout", admin.logout);
 module.exports = router;
