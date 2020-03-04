@@ -3,6 +3,7 @@ var router = express.Router();
 const mongoose = require("mongoose");
 const data = require("../model/user");
 const admin = require("../Controller/adminController");
+const forgot = require("../Controller/forgot");
 const auth = require("../auth/auth");
 
 /* GET home page. */
@@ -20,10 +21,11 @@ router.get("/",auth.checktoken,function(req, res, next) {
   //         console.log("save Succesfully");
   //     }
   // });
-
-  res.render("dashboard.html");
+res.render("dashboard.html");
 });
-
+router.get("/dash",auth.checktoken,admin.dash);
+router.get("/forgot",forgot.forgot);
+router.post("/reset",forgot.reset);
 router.post("/dashboard",admin.adminlogin);
 router.get("/dashboard/subadminreg", auth.checktoken, admin.checkType, function(
   req,

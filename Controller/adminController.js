@@ -1,4 +1,5 @@
 module.exports = {
+  dash,
   adminlogin,
   registersubadmin,
   subadminaction,
@@ -13,7 +14,8 @@ module.exports = {
   checkType,
   deleted,
   restore,
-  logout
+  logout,
+  eMail
 };
 
 const data = require("../model/user");
@@ -23,6 +25,12 @@ var alert = require("alert-node");
 const jwt = require("jsonwebtoken");
 const key = require("../key");
 var cookieParser = require("cookie-parser");
+
+
+function dash(req,res){
+  res.redirect('/');
+
+}
 
 /* Email */
 
@@ -54,6 +62,8 @@ function eMail(email, password, req, res) {
     }
   });
 }
+
+
 
 function checkType(req, res, next) {
   let type = req.type;
