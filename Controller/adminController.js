@@ -64,12 +64,13 @@ function eMail(email, password, req, res) {
 }
 
 function checkType(req, res, next) {
-  let type = req.type;
+  let type =req.type;
   if (type == "admin") {
     next();
   } else {
     alert("You Are Not authorized !!! only admin is authorized");
     res.redirect("/");
+    console.log(type);
   }
 }
 
@@ -93,10 +94,10 @@ function adminlogin(req, res) {
           console.log(err)
         }
         console.log(isMatch);
-        if(isMatch==true){
+        if(isMatch){
           
       jwt.sign(
-        { id: data.id, role: data.role },
+        { id: result.id, role: result.role },
         key.sk,
         { expiresIn: "5m" },
         function(err, data) {
@@ -370,18 +371,25 @@ function change_pswd(req,res){
  
   let id = req.body.id;
   let password=req.body.password;
-  data.findByIdAndUpdate(
-    { _id: id },
-    { $set: {  password: password } },
-    (err, data) => {
-      if (err) {
-        console.log(err);
-      } else {
-        alert("Password Changed SuccessFully");
-        res.redirect("/");
-      }
+  data.findById({ _id: id },(err,result)=>{
+    if(err){
+      console.log("error");
     }
-  );
-
-
+    else if(data == null){
+      console.log(err)
+    }
+    else{
+      result.password=password;
+      result.save((err)=>{
+        if(err){}
+        else{
+          alert("Password Changed SuccessFully");
+          res.redirect("/");
+        }
+      })
+    }
+    
+  })
+ 
 }
+
