@@ -78,14 +78,23 @@ function checkType(req, res, next) {
 function adminlogin(req, res) {
   let username = req.body.admin_name;
   let password = req.body.admin_password;
-  data.findOne({ email: username, password: password }, function(err, data) {
+  console.log(username,password)
+  data.findOne({ 'email': username }, function(err, result) {
     if (err) {
       res.render(err);
-    } else if (data == null) {
+    } 
+    else if (data == null) {
+      
       res.redirect("/");
-    } else {
-      console.log(data);
-
+    }
+    else{
+      result.comparePassword(password,function(err,isMatch){
+        if(err){
+          console.log(err)
+        }
+        console.log(isMatch);
+        if(isMatch==true){
+          
       jwt.sign(
         { id: data.id, role: data.role },
         key.sk,
@@ -99,11 +108,17 @@ function adminlogin(req, res) {
           }
         }
       );
-      // res.render('dashboard.html');
-    }
-  });
-}
 
+        }
+     else{
+          alert("Wrong id And Password");
+        }
+       
+      })
+    }
+  })
+}
+  
 /* Sub-Admin Registration */
 
 function registersubadmin(req, res) {
