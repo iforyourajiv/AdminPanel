@@ -1,6 +1,7 @@
 module.exports = {
   forgot,
-  reset,checkrole
+  reset,
+  checkrole
 };
 
 const data = require("../model/user");
@@ -22,51 +23,35 @@ function eMail(email, password, cb) {
     to: email,
     subject: "Registration",
     html:
-      "Your Password Is Updated for Email: " +
-      email +
-      " Password: " +
-      password
+      "Your Password Is Updated for Email: " + email + " Password: " + password
   };
   transporter.sendMail(mailOptions, function(error, info) {
     if (error) {
       cb(error);
     } else {
-      cb(null,"Email sent: " + info.response);
+      cb(null, "Email sent: " + info.response);
     }
   });
 }
-
-
 
 function forgot(req, res) {
   res.render("forgot-password.html");
 }
 
-
-
-
-function checkrole(req,res,next){
+function checkrole(req, res, next) {
   let email = req.body.email;
-  data.findOne({ 'email': email}, function(err, data) {
+  data.findOne({ email: email }, function(err, data) {
     if (err) {
-    } 
-    
-    else {
-      let role=data.role;
-      if(role=='subadmin'){
+    } else {
+      let role = data.role;
+      if (role == "subadmin") {
         alert("Not Authorized");
-      }
-      else{
+      } else {
         next();
       }
-    
-      
     }
   });
-
-
 }
-
 
 function reset(req, res) {
   let email = req.body.email;
@@ -74,22 +59,20 @@ function reset(req, res) {
     length: 10
   });
   console.log(email);
-  eMail(email,password,function cb(err,result){
-    if(err){
-
-    }
-    else{
-      data.findOneAndUpdate({ 'email': email},{$set:{'password':password}} , function(err, data) {
-        if (err) {
-        } 
-        
-        else {
-          
-            alert("SuccessFully sent Your Password")
-            res.render('index.html');
+  eMail(email, password, function cb(err, result) {
+    if (err) {
+    } else {
+      data.findOneAndUpdate(
+        { email: email },
+        { $set: { password: password } },
+        function(err, data) {
+          if (err) {
+          } else {
+            alert("SuccessFully sent Your Password");
+            res.render("index.html");
+          }
         }
-      });
+      );
     }
   });
-  
 }

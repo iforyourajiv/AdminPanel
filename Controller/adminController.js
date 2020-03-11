@@ -197,63 +197,6 @@ function subadminupdate(req, res) {
   );
 }
 
-/* Sub-Admin Registration */
-
-function add_user(req, res) {
-  let name = req.body.name;
-  let bgroup = req.body.bgroup;
-  let email = req.body.email;
-  let password = generator.generate({
-    length: 10
-  });
-  let role = "user";
-  console.log(name, bgroup, email, password, role);
-  let reg = new data({ name, bgroup, email, password, role });
-
-  reg.save(function(err) {
-    if (err) {
-      alert("All Ready Registered");
-      res.redirect("/dashboard/userreg");
-    } else {
-      eMail(email, password);
-      alert("User Has Been Registered Successfully, Email Sent");
-      res.redirect("/dashboard/userreg");
-    }
-  });
-}
-
-function useraction(req, res) {
-  data.find({ role: "user", is_deleted: "false" }, function(err, data) {
-    record = data;
-    res.render("userregaction.html", { record });
-  });
-}
-
-function user_del(req, res) {
-  let id = req.params.id;
-  data.findOneAndUpdate(
-    { _id: id },
-    { $set: { is_deleted: "true" } },
-    (err, data) => {
-      if (err) {
-        alert("error");
-      } else {
-        alert("deleted");
-        res.redirect("/dashboard/userregaction");
-      }
-    }
-  );
-}
-
-function user_mod(req, res) {
-  let id = req.params.id;
-  data.findById({ _id: id }, (err, data) => {
-    record = data;
-    console.log({ record });
-    res.render("usermodify.html", { record });
-  });
-}
-
 /*user Actions */
 
 function add_user(req, res) {
@@ -263,7 +206,9 @@ function add_user(req, res) {
   let password = generator.generate({
     length: 10
   });
+  
   let role = "user";
+
   console.log(name, bgroup, email, password, role);
   let reg = new data({ name, bgroup, email, password, role });
 
