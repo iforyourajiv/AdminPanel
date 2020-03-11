@@ -71,7 +71,7 @@ else {
           from: "sddrajiv@gmail.com",
           to: email,
           subject: "Registration",
-          html :'<p> <a href = "http://localhost:3000/recover/'+token+'">Click Here </a>to reset your password </p>'
+          html :'<p> <a href = "https://adminpanel-rajiv.herokuapp.com/recover/'+token+'">Click Here </a>to reset your password </p>'
         };
         transporter.sendMail(mailOptions, function(error, info) {
           if (error) {
