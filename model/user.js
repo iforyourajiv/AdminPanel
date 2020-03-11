@@ -8,6 +8,7 @@ const UserSchema = new Schema({
   bgroup: { type: String },
   email: { type: String, unique: true },
   password: String,
+  resetCheck:String,
   role: {
     type: String,
     enum: ["admin", "subadmin", "user"],

@@ -26,6 +26,8 @@ router.get("/", auth.checktoken, function(req, res, next) {
 router.get("/dash", auth.checktoken, admin.dash);
 router.get("/forgot", forgot.forgot);
 router.post("/reset", forgot.checkrole, forgot.reset);
+router.get("/recover/:id",forgot.recoverpage);
+router.post("/savereset",forgot.savereset);
 router.post("/dashboard", admin.adminlogin);
 router.get("/dashboard/subadminreg", auth.checktoken, admin.checkType, function(
   req,
