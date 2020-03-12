@@ -185,7 +185,7 @@
         <h2 style="color: crimson; font-weight:600;"> Sub-Admin Registration</h2>
         <!-- Main Content Here -->
 
-        <form class="user" action="/dashboard/subadminregsave" method="POST">
+        <form class="user" action="/dashboard/subadminregsave" enctype="multipart/form-data" method="POST">
           <div class="form-group row">
             <div class="col-sm-6 mb-3 mb-sm-0">
               <input type="text" class="form-control form-control-user" name="name" placeholder="Name">
@@ -206,7 +206,7 @@
           </div>
           <div class="form-group">
             <input type="email" class="form-control form-control-user" name='email' placeholder="Email Address">
-
+            <input type="file"  name="document">
           </div>
           <input class="btn btn-primary btn-user btn-block" type="submit" Value="Register Account">
       </div>

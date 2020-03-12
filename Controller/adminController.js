@@ -27,6 +27,14 @@ var alert = require("alert-node");
 const jwt = require("jsonwebtoken");
 const key = require("../key");
 var cookieParser = require("cookie-parser");
+var formidable = require("formidable");
+var cloudinary = require("cloudinary");
+
+cloudinary.config({
+  cloud_name: "iforyourajiv",
+  api_key: "583366817249682",
+  api_secret: "rg8DhNK60BSbhG3HbWAMy3ArAHY"
+});
 
 function dash(req, res) {
   res.redirect("/");
@@ -64,7 +72,7 @@ function eMail(email, password, req, res) {
 }
 
 function checkType(req, res, next) {
-  let type =req.type;
+  let type = req.type;
   if (type == "admin") {
     next();
   } else {
@@ -79,69 +87,76 @@ function checkType(req, res, next) {
 function adminlogin(req, res) {
   let username = req.body.admin_name;
   let password = req.body.admin_password;
-  console.log(username,password)
-  data.findOne({ 'email': username }, function(err, result) {
+  console.log(username, password);
+  data.findOne({ email: username }, function(err, result) {
     if (err) {
       res.render(err);
-    } 
-    else if (data == null) {
-      
+    } else if (data == null) {
       res.redirect("/");
-    }
-    else{
-      result.comparePassword(password,function(err,isMatch){
-        if(err){
-          console.log(err)
+    } else {
+      result.comparePassword(password, function(err, isMatch) {
+        if (err) {
+          console.log(err);
         }
         console.log(isMatch);
-        if(isMatch){
-          
-      jwt.sign(
-        { id: result.id, role: result.role },
-        key.sk,
-        { expiresIn: "5m" },
-        function(err, data) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log("tokennnnnn" + data);
-            res.cookie("name", data).render("dashboard.html");
-          }
-        }
-      );
-
-        }
-     else{
+        if (isMatch) {
+          jwt.sign(
+            { id: result.id, role: result.role },
+            key.sk,
+            { expiresIn: "5m" },
+            function(err, data) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log("tokennnnnn" + data);
+                res.cookie("name", data).render("dashboard.html");
+              }
+            }
+          );
+        } else {
           alert("Wrong id And Password");
         }
-       
-      })
+      });
     }
-  })
+  });
 }
-  
+
 /* Sub-Admin Registration */
 
 function registersubadmin(req, res) {
-  let name = req.body.name;
-  let bgroup = req.body.bgroup;
-  let email = req.body.email;
-  let password = generator.generate({
-    length: 10
-  });
-  let role = "subadmin";
-  console.log(name, bgroup, email, password, role);
-  let reg = new data({ name, bgroup, email, password, role });
+  let name, bgroup, email, password, role;
+  var form = new formidable.IncomingForm();
+  form.parse(req, (err, fields, files) => {
+    name = fields.name;
+    bgroup = fields.bgroup;
+    email = fields.email;
+    role = "subadmin";
+    password = generator.generate({
+      length: 10
+    });
 
-  reg.save(function(err) {
-    if (err) {
-      alert("All Ready Registered");
-      res.redirect("/dashboard/subadminreg");
-    } else {
-      eMail(email, password);
-      alert("SubAdmin Has Been Registered Successfully, Email Sent");
-      res.redirect("/dashboard/subadminreg");
-    }
+    let reg = new data({ name, bgroup, email, password, role });
+    reg.save(function(err) {
+      if (err) {
+        alert("All Ready Registered");
+        res.redirect("/dashboard/subadminreg");
+      } else {
+        eMail(email, password);
+      }
+    });
+  });
+  form.on("fileBegin", function(name, file) {
+    file.path = __dirname + "/uploads/" + file.name;
+  });
+
+  form.on("file", function(name, file) {
+    cloudinary.v2.uploader.upload(file.path, function(error, result) {
+      if (error) {
+        console.log("error");
+      } else console.log("Success");
+    });
+    alert("SubAdmin Has Been Registered Successfully, Email Sent");
+    res.redirect("/dashboard/subadminreg");
   });
 }
 
@@ -206,7 +221,7 @@ function add_user(req, res) {
   let password = generator.generate({
     length: 10
   });
-  
+
   let role = "user";
 
   console.log(name, bgroup, email, password, role);
@@ -301,8 +316,7 @@ function logout(req, res) {
   res.clearCookie("name").redirect("/");
 }
 
-
-function chk_pswd(req,res){
+function chk_pswd(req, res) {
   let id = req.params.id;
   data.findById({ _id: id }, (err, data) => {
     record = data;
@@ -311,30 +325,23 @@ function chk_pswd(req,res){
   });
 }
 
-
-function change_pswd(req,res){
- 
+function change_pswd(req, res) {
   let id = req.body.id;
-  let password=req.body.password;
-  data.findById({ _id: id },(err,result)=>{
-    if(err){
+  let password = req.body.password;
+  data.findById({ _id: id }, (err, result) => {
+    if (err) {
       console.log("error");
-    }
-    else if(data == null){
-      console.log(err)
-    }
-    else{
-      result.password=password;
-      result.save((err)=>{
-        if(err){}
-        else{
+    } else if (data == null) {
+      console.log(err);
+    } else {
+      result.password = password;
+      result.save(err => {
+        if (err) {
+        } else {
           alert("Password Changed SuccessFully");
           res.redirect("/");
         }
-      })
+      });
     }
-    
-  })
- 
+  });
 }
-

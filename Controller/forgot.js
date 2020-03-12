@@ -8,7 +8,6 @@ module.exports = {
 
 const data = require("../model/user");
 const mailer = require("nodemailer");
-const generator = require("generate-password");
 var alert = require("alert-node");
 const jwt = require("jsonwebtoken");
 
@@ -103,7 +102,7 @@ else {
 
 function recoverpage(req,res){
   let token=req.params.id;
-  console.log("kskjdskjfnsjkfnsfnsflknsdf"+token)
+  console.log("this is--------->"+token)
   jwt.verify(token,"rajiv",(err,result)=>{
       if(err){
           res.json("Invalid Token");
