@@ -76,25 +76,21 @@ router.post("/dashboard/userreg_save", auth.checktoken, admin.add_user);
 router.get(
   "/dashboard/userregaction",
   auth.checktoken,
-  admin.checkType,
   admin.useraction
 );
 router.get(
   "/dashboard/user_del/:id",
   auth.checktoken,
-  admin.checkType,
   admin.user_del
 );
 router.get(
   "/dashboard/user_mod/:id",
   auth.checktoken,
-  admin.checkType,
   admin.user_mod
 );
 router.post(
   "/dashboard/user_update",
   auth.checktoken,
-  admin.checkType,
   admin.user_update
 );
 router.get(

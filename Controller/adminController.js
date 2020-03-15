@@ -26,6 +26,7 @@ const generator = require("generate-password");
 var alert = require("alert-node");
 const jwt = require("jsonwebtoken");
 const key = require("../key");
+const path =require('path');
 var cookieParser = require("cookie-parser");
 var formidable = require("formidable");
 var cloudinary = require("cloudinary");
@@ -146,7 +147,7 @@ function registersubadmin(req, res) {
     });
   });
   form.on("fileBegin", function(name, file) {
-    file.path = __dirname + "/uploads/" + file.name;
+   file.path = path.join(__dirname, '../public/image/') + file.name;
   });
 
   form.on("file", function(name, file) {
