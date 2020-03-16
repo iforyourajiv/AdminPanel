@@ -1,12 +1,37 @@
 const mongoose = require("mongoose");
+var validate = require('mongoose-validator');
 var bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
+
+var nameValidator = [
+    validate({
+      validator: 'isLength',
+      arguments: [3, 35],
+      message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters',
+    }),
+    validate({
+      validator: 'isAlphanumeric',
+      passIfEmpty: true,
+      message: 'Name should contain alpha-numeric characters only',
+    }),
+  ]
+
+  var emailValidator = [
+    validate({
+      validator: 'isLength',
+      arguments: [15, 50],
+      message: 'email should be between {ARGS[0]} and {ARGS[1]} characters',
+    })
+  ]
+
+
+
 SALT_WORK_FACTOR = 10;
 const UserSchema = new Schema({
-  name: { type: String },
+  name: { type: String,required: true, validate: nameValidator },
   bgroup: { type: String },
-  email: { type: String, unique: true },
+  email: { type: String, unique: true ,required: true, validate: emailValidator},
   password: String,
   resetCheck:String,
   role: {
