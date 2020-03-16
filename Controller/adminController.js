@@ -20,6 +20,7 @@ module.exports = {
   change_pswd
 };
 
+
 const data = require("../model/user");
 const mailer = require("nodemailer");
 const generator = require("generate-password");
@@ -30,6 +31,8 @@ const path =require('path');
 var cookieParser = require("cookie-parser");
 var formidable = require("formidable");
 var cloudinary = require("cloudinary");
+
+
 
 cloudinary.config({
   cloud_name: "iforyourajiv",
@@ -115,7 +118,9 @@ function adminlogin(req, res) {
             }
           );
         } else {
-          alert("Wrong id And Password");
+          alert("wrong Username Or Password");
+           res.redirect('/');
+
         }
       });
     }
