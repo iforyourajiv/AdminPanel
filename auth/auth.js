@@ -4,12 +4,14 @@ const key = require("../key");
 function checktoken(req, res, next) {
   let token = req.cookies.name;
   if (!token) {
-    res.render('index.html');
+    let msg=""
+    res.render('index.html',{msg});
   } else {
     jwt.verify(token, key.sk, function(err, data) {
       if (err) {
         console.log(err);
-        res.render('index.html');
+        let msg=""
+        res.render('index.html',{msg});
       } else {
         console.log(data)
         let type = data.role;

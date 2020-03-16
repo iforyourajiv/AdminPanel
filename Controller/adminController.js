@@ -118,8 +118,8 @@ function adminlogin(req, res) {
             }
           );
         } else {
-          alert("wrong Username Or Password");
-           res.redirect('/');
+           let msg="Wrong Email Or Password"
+           res.render("index.html",{msg})
 
         }
       });
@@ -144,8 +144,8 @@ function registersubadmin(req, res) {
     let reg = new data({ name, bgroup, email, password, role });
     reg.save(function(err) {
       if (err) {
-        alert("All Ready Registered");
-        res.redirect("/dashboard/subadminreg");
+        let msg="User Allready Registered"
+        res.redirect("subadminreg.html",{msg});
       } else {
         eMail(email, password);
       }
@@ -161,8 +161,8 @@ function registersubadmin(req, res) {
         console.log("error");
       } else console.log("Success");
     });
-    alert("SubAdmin Has Been Registered Successfully, Email Sent");
-    res.redirect("/dashboard/subadminreg");
+    let msg="SubAdmin Has Been Registered Successfully, Email Sent";
+    res.render("subadminreg.html",{msg});
   });
 }
 
@@ -171,7 +171,8 @@ function registersubadmin(req, res) {
 function subadminaction(req, res) {
   data.find({ role: "subadmin", is_deleted: "false" }, function(err, data) {
     record = data;
-    res.render("subadminaction.html", { record });
+  
+    res.render("subadminaction.html", {record});
   });
 }
 
@@ -235,12 +236,12 @@ function add_user(req, res) {
 
   reg.save(function(err) {
     if (err) {
-      alert("All Ready Registered");
-      res.redirect("/dashboard/userreg");
+      let="All Ready Registered";
+      res.render("Add_user.html",{msg});
     } else {
       eMail(email, password);
-      alert("User Has Been Registered Successfully, Email Sent");
-      res.redirect("/dashboard/userreg");
+      let msg="User Has Been Registered Successfully, Email Sent";
+      res.render("Add_user.html",{msg});
     }
   });
 }
@@ -319,7 +320,8 @@ function restore(req, res) {
 }
 
 function logout(req, res) {
-  res.clearCookie("name").redirect("/");
+  let msg="Logout SuccessFully"
+  res.clearCookie("name").render("index.html",{msg});
 }
 
 function chk_pswd(req, res) {
@@ -332,22 +334,24 @@ function chk_pswd(req, res) {
 }
 
 function change_pswd(req, res) {
+  
   let id = req.body.id;
   let password = req.body.password;
-  data.findById({ _id: id }, (err, result) => {
+  data.findById({'_id': id }, (err, result) => {
     if (err) {
-      console.log("error");
-    } else if (data == null) {
       console.log(err);
+    } else if (result == null) {
     } else {
       result.password = password;
-      result.save(err => {
-        if (err) {
-        } else {
-          alert("Password Changed SuccessFully");
-          res.redirect("/");
+      result.save((err)=>{
+        if(err){
+          console.log(err)
         }
-      });
+        else{
+          alert("Password Change SuccessFully")
+             res.redirect('/');
+        }
+      })
     }
   });
 }

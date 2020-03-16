@@ -9,18 +9,12 @@ var nameValidator = [
       validator: 'isLength',
       arguments: [3, 35],
       message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters',
-    }),
-    validate({
-      validator: 'isAlphanumeric',
-      passIfEmpty: true,
-      message: 'Name should contain alpha-numeric characters only',
-    }),
+    })
   ]
 
   var emailValidator = [
     validate({
-      validator: 'isLength',
-      arguments: [15, 50],
+      validator: 'isEmail',
       message: 'email should be between {ARGS[0]} and {ARGS[1]} characters',
     })
   ]

@@ -83,8 +83,8 @@ else {
                                         res.json("Error")
                                     }
                                     else{
-                                      alert("Reset Link Successfully Sent to the  "+email);
-                                        res.redirect('/');
+                                      let msg="Reset Link Successfully Sent to the email";
+                                        res.render("index.html",{msg});
                                     }
                                 })
           }

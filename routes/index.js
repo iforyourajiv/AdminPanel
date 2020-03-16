@@ -33,7 +33,8 @@ router.get("/dashboard/subadminreg", auth.checktoken, admin.checkType, function(
   req,
   res
 ) {
-  res.render("subadminreg.html");
+  let msg=""
+  res.render("subadminreg.html",{msg});
 });
 router.post(
   "/dashboard/subadminregsave",
@@ -69,7 +70,8 @@ router.post(
 /* User Routes */
 
 router.get("/dashboard/userreg", auth.checktoken, function(req, res) {
-  res.render("Add_user.html");
+  let msg="";
+  res.render("Add_user.html",{msg});
 });
 
 router.post("/dashboard/userreg_save", auth.checktoken, admin.add_user);
